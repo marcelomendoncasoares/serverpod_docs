@@ -151,6 +151,30 @@ await SessionMetadata.db.insertRow(
 
 See [Issuing Tokens](./managing-tokens#issuing-tokens) in Managing tokens for more context.
 
+## Cleanup of expired sessions
+
+Over time, expired sessions can accumulate in the database, leading to database bloat and potential performance issues. Expired sessions are not automatically removed—they are simply rejected when validated—so it is up to each application to periodically clean them up. This is similar to [cleaning up expired email provider data](../providers/email/admin-operations.md#cleanup-operations).
+
+### Deleting expired sessions
+
+Access the server-side sessions admin through the token manager and call `deleteExpiredSessions`:
+
+```dart
+final sessionManager = AuthServices.getTokenManager<ServerSideSessionsTokenManager>();
+await sessionManager.serverSideSessions.admin.deleteExpiredSessions(session);
+```
+
+By default, this removes:
+
+- Sessions whose `expiresAt` date has passed (lifetime expiration).
+- Sessions that have been inactive for longer than their `expireAfterUnusedFor` duration (inactivity timeout).
+
+You can control which of these to delete with the optional parameters `deleteExpired` and `deleteInactive` (both default to `true`).
+
+### Running cleanup periodically
+
+Run this cleanup on a schedule (for example, via a [recurring task](../../scheduling/recurring-task.md) or an `InternalSession` used in a recurring job) so that expired session rows do not grow indefinitely. For more on using a session for maintenance tasks, see [Sessions](../../sessions.md#example-manual-session-internalsession).
+
 ## Client-side configuration
 
 When using the `ServerSideSessionsTokenManager` in the server, no extra configuration is needed on the client. It will automatically include the session token in requests to the server. In case the session expires or is revoked, the client will automatically sign the user out and redirect to the login page.
