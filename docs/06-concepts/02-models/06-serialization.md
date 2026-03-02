@@ -148,7 +148,7 @@ If you need certain fields to be omitted when transmitting to the client-side, y
 
 ### Implementation Example
 
-Here’s how you can implement it:
+Here's how you can implement it:
 
 ```dart
 class CustomClass implements ProtocolSerialization {

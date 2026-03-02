@@ -196,6 +196,21 @@ const config = {
             from: ['/concepts/scheduling'],
             to: '/concepts/scheduling/setup',
           },
+          {
+            // Moved when models was reorganized from a single page to a directory
+            from: ['/concepts/models'],
+            to: '/concepts/models/01-setup',
+          },
+          {
+            // Moved serialization under models
+            from: ['/concepts/serialization'],
+            to: '/concepts/models/serialization',
+          },
+          {
+            // Moved shared-packages under models
+            from: ['/concepts/shared-packages',],
+            to: '/concepts/models/07-shared-packages',
+          },
         ],
       },
     ],

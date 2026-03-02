@@ -356,7 +356,7 @@ shared_packages:
   - ../another_shared_package
 ```
 
-Models and the protocol file are generated in each shared package's own directory when you run `serverpod generate` from your server project. See the [shared packages documentation](shared-packages) for setup, usage, and restrictions.
+Models and the protocol file are generated in each shared package's own directory when you run `serverpod generate` from your server project. See the [shared packages documentation](02-models/07-shared-packages) for setup, usage, and restrictions.
 
 ### Custom serializable classes
 
@@ -368,7 +368,7 @@ extraClasses:
   - package:my_shared_package/my_shared_package.dart:AnotherCustomClass
 ```
 
-See the [serialization documentation](serialization) for implementing custom serializable classes.
+See the [serialization documentation](02-models/06-serialization) for implementing custom serializable classes.
 
 ### Features
 

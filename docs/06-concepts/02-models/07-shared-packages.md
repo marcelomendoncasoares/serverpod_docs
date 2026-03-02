@@ -172,4 +172,4 @@ Shared models support most Serverpod model features, with these exceptions:
 
 If you need tables or server-only fields, define them in a server model that extends the shared model.
 
-The shared package can also contain custom serializable classes. Register them in the server's `generator.yaml` under `extraClasses` if they need to be used in protocol serialization. See [Custom serializable classes](07-configuration#custom-serializable-classes) for details.
+The shared package can also contain custom serializable classes. Register them in the server's `generator.yaml` under `extraClasses` if they need to be used in protocol serialization. See [Custom serializable classes](../07-configuration#custom-serializable-classes) for details.

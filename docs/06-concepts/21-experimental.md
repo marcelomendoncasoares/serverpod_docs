@@ -11,7 +11,7 @@ However, they may not be fully stable or complete and are subject to change.
 Experimental features are disabled by default, i.e. they are not active unless the developer opts-in.
 
 :::note
-To make the LSP server understand the usage of experimental flags and avoid complaints about unknown syntax on model files, configure experimental features in the `config/generator.yaml` file. See the [configuration documentation](configuration#experimental-features) for more details.
+To make the LSP server understand the usage of experimental flags and avoid complaints about unknown syntax on model files, configure experimental features in the `config/generator.yaml` file. See the [configuration documentation](../07-configuration#experimental-features) for more details.
 :::
 
 ## Experimental internal APIs
@@ -42,7 +42,7 @@ This can be useful when the column names in the database are not following the s
 
 ### Usage
 
-To override the column name, use the `column` keyword in the `fields` configuration of your [model](database/models) file to specify the column name in the database.
+To override the column name, use the `column` keyword in the `fields` configuration of your [model](../06-database/02-models) file to specify the column name in the database.
 
 ```yaml
 class: User
@@ -55,7 +55,7 @@ fields:
 
 - **ID Field**: The `id` field cannot have a column name override.
 - **Unique**: The column name must be unique within the model.
-- **Relations**: The `column` keyword is only allowed on the [foreign key field](database/relations/one-to-one#with-an-id-field) of a relation.
+- **Relations**: The `column` keyword is only allowed on the [foreign key field](../06-database/03-relations/01-one-to-one#with-an-id-field) of a relation.
 
 ### Relations
 
@@ -102,7 +102,7 @@ fields:
 
 ### Inheritance
 
-The column name override is also supported when using [inheritance](models#inheritance) and will be applied to all child classes. This is especially useful when you have multiple database tables that share similar column names. This allows you to define a parent class as a regular [model](../get-started/models-and-data) and specify additional fields in the child classes defined as [table models](database/models).
+The column name override is also supported when using [inheritance](02-models/03-inheritance#extending-a-class) and will be applied to all child classes. This is especially useful when you have multiple database tables that share similar column names. This allows you to define a parent class as a regular [model](../01-get-started/02-models-and-data) and specify additional fields in the child classes defined as [table models](../06-database/02-models).
 
 ```yaml
 # Entity

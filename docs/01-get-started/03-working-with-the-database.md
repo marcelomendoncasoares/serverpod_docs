@@ -28,7 +28,7 @@ fields:
 <!--SNIPEND-->
 
 :::info
-Check out the reference for [database models](../06-concepts/02-models.md#keywords-1) for an overview of all available keywords.
+Check out the reference for [database models](../06-concepts/02-models/05-advanced#keywords) for an overview of all available keywords.
 :::
 
 ## Migrations
