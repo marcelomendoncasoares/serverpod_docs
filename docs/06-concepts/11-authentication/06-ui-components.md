@@ -70,7 +70,7 @@ SignInWidget(
 )
 ```
 
-### Customizing SignInWidget
+### Customizing the SignInWidget
 
 You can customize individual provider widgets:
 
@@ -118,3 +118,54 @@ void _onError(Object error) {
 ```
 
 For more details on all options of each provider widget, see the "Customizing UI" section of the specific provider documentation. There you will also find information on how to build a custom UI with the controller. For example, see the [Email Provider](./providers/email/customizing-the-ui) documentation.
+
+### Localizing the SignInWidget
+
+You can localize the built-in authentication widgets by wrapping them in a `SignInLocalizationProvider`. If you do not provide a localization provider, the widgets use the default English texts.
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:serverpod_auth_idp_flutter/serverpod_auth_idp_flutter.dart';
+
+SignInLocalizationProvider(
+  basic: const BasicSignInTexts(
+    noAuthenticationProvidersConfigured: 'No authentication providers configured',
+    orContinueWith: 'Or continue with',
+  ),
+  email: EmailSignInTexts.defaults.copyWith(
+    title: 'Sign in with email',
+    signUpTitle: 'Create your account',
+    forgotPassword: 'Forgot your password?',
+    verificationMessage:
+        'We sent a verification code to your email. Enter it below.',
+  ),
+  passwordRequirementTexts: PasswordRequirementTexts.defaults.copyWith(
+    minLengthTemplate: 'Use at least {length} characters',
+    containsNumber: 'Include at least one number',
+  ),
+  apple: const AppleSignInTexts(signInButton: 'Continue with Apple'),
+  google: const GoogleSignInTexts(signInButton: 'Continue with Google'),
+  github: const GitHubSignInTexts(signInButton: 'Continue with GitHub'),
+  microsoft: const MicrosoftSignInTexts(signInButton: 'Continue with Microsoft'),
+  facebook: const FacebookSignInTexts(signInButton: 'Continue with Facebook'),
+  anonymous: const AnonymousSignInTexts(signInButton: 'Continue as guest'),
+  child: SignInWidget(
+    client: client,
+    onAuthenticated: _onAuthenticated,
+    onError: _onError,
+  ),
+)
+```
+
+Use `copyWith` when you only want to override a few strings and keep the rest of the defaults.
+
+The localization provider supports texts for:
+
+- Shared sign-in widget labels through `BasicSignInTexts`.
+- The full email authentication flow through `EmailSignInTexts`.
+- Password rule descriptions through `PasswordRequirementTexts`.
+- Button labels for Apple, Google, GitHub, Microsoft, Facebook, and anonymous sign-in.
+
+:::info
+On web, the Google button is rendered by the underlying Google Sign-In integration. In that case, the `GoogleSignInTexts` override is only applied on native platforms.
+:::

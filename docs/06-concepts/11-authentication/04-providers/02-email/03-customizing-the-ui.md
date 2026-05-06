@@ -84,6 +84,45 @@ EmailSignInWidget(
 The terms and conditions and privacy policy checkbox on the registration screen are optional and disabled by default. The checkbox will only be shown if you provide both `onTermsAndConditionsPressed` and `onPrivacyPolicyPressed` callbacks.
 :::
 
+### Localizing the email flow
+
+If you are using the built-in email UI, localize its labels and messages by wrapping the widget in a `SignInLocalizationProvider`. This lets you replace the default English texts used by login, registration, verification, and password reset screens.
+
+```dart
+import 'package:serverpod_auth_idp_flutter/serverpod_auth_idp_flutter.dart';
+
+SignInLocalizationProvider(
+  email: EmailSignInTexts.defaults.copyWith(
+    title: 'Sign in',
+    signUpTitle: 'Create account',
+    forgotPassword: 'Forgot password?',
+    verifyAccountTitle: 'Verify your account',
+    verificationMessage:
+        'Check your email for the verification code, then enter it below.',
+    setNewPasswordTitle: 'Choose a new password',
+    requestPasswordReset: 'Send reset code',
+    backToSignIn: 'Back to sign in',
+    termsAndConditions: 'Terms of service',
+    privacyPolicy: 'Privacy policy',
+  ),
+  passwordRequirementTexts: PasswordRequirementTexts.defaults.copyWith(
+    minLengthTemplate: 'Use at least {length} characters',
+    containsUppercase: 'Include an uppercase letter',
+    containsLowercase: 'Include a lowercase letter',
+    containsNumber: 'Include a number',
+    containsSpecialCharacter: 'Include a special character',
+  ),
+  child: EmailSignInWidget(
+    client: client,
+    onAuthenticated: () {
+      // Do something when the user is authenticated.
+    },
+  ),
+)
+```
+
+Use `EmailSignInTexts.defaults.copyWith(...)` to override only the strings you need. For password rules, keep the `{length}` placeholder in `minLengthTemplate` and `maxLengthTemplate` so the widget can insert the configured rule length.
+
 ### Customizing the default widget's appearance
 
 Since the `EmailSignInWidget` uses the material design system, it will react to your app's material theme. You can also wrap it in a `Theme` widget to apply a custom theme.

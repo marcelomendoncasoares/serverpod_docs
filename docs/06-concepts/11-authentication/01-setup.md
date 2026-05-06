@@ -252,6 +252,8 @@ See [Client-side authentication](./basics#client-side-authentication) for more d
 
 The `serverpod_auth_idp_flutter` package provides a `SignInWidget` that automatically detects enabled authentication providers and displays the appropriate sign-in options.
 
+To customize or localize the built-in authentication UI, see [UI components](./ui-components).
+
 ```dart
 import 'package:flutter/material.dart';
 import 'package:serverpod_auth_idp_flutter/serverpod_auth_idp_flutter.dart';
