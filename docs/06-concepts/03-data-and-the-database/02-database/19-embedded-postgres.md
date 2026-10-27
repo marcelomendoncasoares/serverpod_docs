@@ -37,21 +37,25 @@ The cache location depends on your operating system:
 
 Set `SERVERPOD_PG_CACHE_DIR` to keep the binaries in a different directory.
 
-Serverpod starts the database before it opens its connection pool, and connects over a Unix domain socket instead of a TCP port, so several projects can run at once without competing for ports. If another Serverpod process already runs a database in the same `dataPath`, the new process attaches to it rather than starting a second one.
+Serverpod starts the database before it opens its connection pool and connects to it over a Unix domain socket. When `config/passwords.yaml` has a `database` password for the run mode, as new projects do, the database also listens on the configured `port`, so other tools can connect to it. If another Serverpod process already runs a database in the same `dataPath`, the new process attaches to it rather than starting a second one.
+
+If another process already holds the port, such as a Docker PostgreSQL from an older project, the start fails and names the port. Under `serverpod start`, a port held by another `serverpod start`, for example in another worktree, moves the whole stack to free ports instead.
 
 The files under `dataPath` are kept when the server stops, so your data is still there on the next start. After an unclean exit, Serverpod clears the leftover process state and brings the database back up.
 
 ## Connect a database tool
 
-Most clients like `psql` and `pgAdmin` connect over TCP, not the Unix socket the server uses. To inspect the data with one of them, start the database on its own while the server is stopped:
+Clients like `psql` and `pgAdmin` connect to `localhost` on the configured `port`. Use the `name` and `user` from the run mode's configuration, and the password from `config/passwords.yaml`.
+
+To start the database without the server, or to print its addresses, run:
 
 ```bash
 $ serverpod database start
 ```
 
-It boots the database configured for the `development` run mode and keeps it listening on the configured port until you stop it with Ctrl+C. Connect with the `name` and `user` from that run mode's configuration, and the password from `config/passwords.yaml`.
+It boots the database configured for the `development` run mode, prints its Unix socket and TCP addresses, and keeps it running until you stop it with Ctrl+C. If the server already runs the database, the command joins it instead, and the database stops when the server does.
 
-Pass `--mode` to pick another run mode and `--port` to listen somewhere else:
+Pass `--mode` to pick another run mode and `--port` to listen somewhere else. The `--port` option needs a database password, and fails when the database already runs on another port:
 
 ```bash
 $ serverpod database start --mode test --port 9090

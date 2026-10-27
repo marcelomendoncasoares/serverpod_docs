@@ -181,7 +181,7 @@ New 4.0 projects use the `ghcr.io/serverpod/postgres:16` image, which bundles pg
 
 #### Switch to the embedded Postgres (recommended for new development)
 
-The embedded Postgres runs as a child process of your server and uses the same Postgres dialect as production. It needs no Docker. It connects over a Unix domain socket, so it doesn't compete for TCP ports. You can reset it by deleting its data directory. See [Embedded PostgreSQL](../concepts/data-and-the-database/database/embedded-postgres).
+The embedded Postgres runs as a child process of your server and uses the same Postgres dialect as production. It needs no Docker. You can reset it by deleting its data directory. See [Embedded PostgreSQL](../concepts/data-and-the-database/database/embedded-postgres).
 
 To switch, add `dataPath` to the database section of `<project>_server/config/development.yaml` and `<project>_server/config/test.yaml`:
 
@@ -206,7 +206,7 @@ Once `dataPath` is set, `serverpod start` uses the embedded Postgres automatical
 
 Don't add `dataPath` to `production.yaml` or `staging.yaml`. In production, use a managed Postgres, such as a [Serverpod Cloud](/cloud) database, Cloud SQL, or RDS. Pick an engine version of 16 or later, which Serverpod 4.0 requires.
 
-The server reaches the embedded Postgres over the socket, but database tools like `psql` connect over TCP. To connect a tool, stop the server and run `serverpod database start`. See [Connect a database tool](../concepts/data-and-the-database/database/embedded-postgres#connect-a-database-tool).
+The embedded Postgres listens on the configured `port`, so stop the Docker Postgres with `docker compose stop` before the first start. Otherwise the start fails because the port is taken. Database tools like `psql` connect to that port as before. See [Connect a database tool](../concepts/data-and-the-database/database/embedded-postgres#connect-a-database-tool).
 
 :::note
 
